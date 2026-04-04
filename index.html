@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حجز السنتر - مستر ابراهيـــــم امــــــام</title>
+<title>حجز السنتر - مستر ابراهيـــــم امـــــــــــام</title>
+
 <style>
 @font-face {
     font-family: 'Palestine';
     src: url('Palestine-Regular.ttf') format('truetype');
 }
+
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Palestine', sans-serif; }
 
 :root {
@@ -23,15 +25,25 @@
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><path d="M10,60 L20,20 L30,60 L40,20 L50,60 L60,20 L70,60" stroke="rgba(255,255,255,0.05)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>');
-    background-repeat: repeat;
-    background-size: 80px 80px;
+
+    /* ✅ GRID بدل المربعات */
+    background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+
     overflow-x: hidden;
 }
 
 .hero-section { text-align:center; padding:20px; }
+
 .hero-image-container { width:100%; max-width:400px; margin:20px auto; }
-.hero-image { width:100%; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.7); }
+
+.hero-image { 
+    width:100%; 
+    border-radius:20px; 
+    box-shadow:0 10px 30px rgba(0,0,0,0.7); 
+}
 
 .badge {
     background-color: var(--accent-color);
@@ -44,8 +56,19 @@ body {
 }
 
 h1 { font-size:2rem; font-weight:900; margin:15px 0; }
-.highlight-gold { color: var(--accent-color); font-size:4rem; display:block; margin-top:10px; }
-.subtitle { font-size:1rem; opacity:0.9; margin-bottom:30px; }
+
+.highlight-gold { 
+    color: var(--accent-color); 
+    font-size:4rem; 
+    display:block; 
+    margin-top:10px; 
+}
+
+.subtitle { 
+    font-size:1rem; 
+    opacity:0.9; 
+    margin-bottom:30px; 
+}
 
 .form-container {
     background-color: var(--card-bg);
@@ -55,46 +78,135 @@ h1 { font-size:2rem; font-weight:900; margin:15px 0; }
     border-radius:20px;
     max-width:500px;
 }
+
 .form-group { margin-bottom:15px; text-align:right; }
-label { display:block; margin-bottom:5px; color: var(--accent-color); font-weight:bold; font-size:0.95rem; }
-input, select {
-    width:100%; padding:12px; border:none; border-radius:10px;
-    background-color: var(--input-bg); color:#FFF; font-size:0.95rem; text-align:right;
+
+label { 
+    display:block; 
+    margin-bottom:5px; 
+    color: var(--accent-color); 
+    font-weight:bold; 
+    font-size:0.95rem; 
 }
+
+input, select {
+    width:100%; 
+    padding:12px; 
+    border:none; 
+    border-radius:10px;
+    background-color: var(--input-bg); 
+    color:#FFF; 
+    font-size:0.95rem; 
+    text-align:right;
+}
+
 input::placeholder { color:#aaa; }
 
 .btn-submit {
-    width:100%; padding:12px; background-color: var(--accent-color);
-    color: var(--bg-main); border:none; border-radius:10px;
-    font-size:1.1rem; font-weight:900; cursor:pointer; margin-top:10px;
+    width:100%; 
+    padding:12px; 
+    background-color: var(--accent-color);
+    color: var(--bg-main); 
+    border:none; 
+    border-radius:10px;
+    font-size:1.1rem; 
+    font-weight:900; 
+    cursor:pointer; 
+    margin-top:10px;
 }
-.btn-submit:hover { background-color: var(--btn-hover); color: var(--bg-main); }
+
+.btn-submit:hover { 
+    background-color: var(--btn-hover); 
+}
 
 .locations-section { padding:35px 20px; text-align:center; }
-.section-title { font-size:1.8rem; font-weight:900; margin-bottom:10px; position:relative; display:inline-block; }
-.section-title::after {
-    content:''; position:absolute; bottom:-10px; right:50%; transform:translateX(50%);
-    width:80px; height:3px; background-color: var(--accent-color); border-radius:2px;
+
+.section-title { 
+    font-size:1.8rem; 
+    font-weight:900; 
+    margin-bottom:10px; 
+    position:relative; 
+    display:inline-block; 
 }
-.locations-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:15px; margin-top:30px; }
+
+.section-title::after {
+    content:''; 
+    position:absolute; 
+    bottom:-10px; 
+    right:50%; 
+    transform:translateX(50%);
+    width:80px; 
+    height:3px; 
+    background-color: var(--accent-color); 
+    border-radius:2px;
+}
+
+.locations-grid { 
+    display:grid; 
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); 
+    gap:15px; 
+    margin-top:30px; 
+}
+
 .location-card {
-    background-color: var(--card-bg); border-radius:12px; padding:20px; text-align:center;
+    background-color: var(--card-bg); 
+    border-radius:12px; 
+    padding:20px; 
+    text-align:center;
     transition: transform 0.3s;
 }
-.location-card:hover { transform:translateY(-5px); border:1px solid var(--accent-color); }
-.location-icon { font-size:2.5rem; color: var(--accent-color); margin-bottom:12px; }
-.location-name { font-size:1.2rem; font-weight:bold; color: var(--accent-color); margin-bottom:8px; }
-.location-address { font-size:0.85rem; opacity:0.9; line-height:1.4; }
 
-footer { padding:35px 20px; text-align:center; margin-top:40px; }
+.location-card:hover { 
+    transform:translateY(-5px); 
+    border:1px solid var(--accent-color); 
+}
+
+.location-icon { 
+    font-size:2.5rem; 
+    color: var(--accent-color); 
+    margin-bottom:12px; 
+}
+
+.location-name { 
+    font-size:1.2rem; 
+    font-weight:bold; 
+    color: var(--accent-color); 
+    margin-bottom:8px; 
+}
+
+.location-address { 
+    font-size:0.85rem; 
+    opacity:0.9; 
+    line-height:1.4; 
+}
+
+footer { 
+    padding:35px 20px; 
+    text-align:center; 
+    margin-top:40px; 
+}
+
 .social-icons { margin:15px 0; }
+
 .social-icons a {
-    color: var(--text-main); font-size:1.4rem; margin:0 8px;
-    width:45px; height:45px; display:inline-flex; align-items:center; justify-content:center;
-    border:2px solid var(--accent-color); border-radius:50%; transition:all 0.3s;
+    color: var(--text-main); 
+    font-size:1.4rem; 
+    margin:0 8px;
+    width:45px; 
+    height:45px; 
+    display:inline-flex; 
+    align-items:center; 
+    justify-content:center;
+    border:2px solid var(--accent-color); 
+    border-radius:50%; 
+    transition:all 0.3s;
     text-decoration:none;
 }
-.social-icons a:hover { background-color: var(--accent-color); color: var(--bg-main); text-decoration:none; }
+
+.social-icons a:hover { 
+    background-color: var(--accent-color); 
+    color: var(--bg-main); 
+}
 
 @media (max-width:600px){
     h1 { font-size:1.7rem; }
@@ -102,22 +214,32 @@ footer { padding:35px 20px; text-align:center; margin-top:40px; }
     .form-container { padding:15px; }
 }
 </style>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
 
 <div class="hero-section">
+
+    <div class="badge">الحجز للعام الدراسي الجديد 2027 - 2026</div>
+
+    <!-- ✅ الصورة بعد البادچ -->
     <div class="hero-image-container">
         <a href="https://ibb.co/Pvbf6VhS">
         <img src="https://i.ibb.co/pBs9Lkzm/Generated-Image-September-19-2025-7-23-PM-1-1.png" alt="ابراهيـــــم امــــــام" class="hero-image">
         </a>
     </div>
-    
-    <div class="badge">الحجز للعام الدراسي الجديد 2027 - 2026</div>
-    
-    <h1>احجز مكانك مع مستر<br><span class="highlight-gold">ابراهيـــــم امــــــام</span></h1>
-    
-    <p class="subtitle">احجز الآن مع كينج اللغة الانجليزية<br>بسهولة و بمواعيد مناسبة ليك يا بطل</p>
+
+    <h1>
+        احجز مكانك مع مستر<br>
+        <span class="highlight-gold">ابراهيـــــم امــــــام</span>
+    </h1>
+
+    <p class="subtitle">
+        احجز الآن مع كينج اللغة الانجليزية<br>بسهولة و بمواعيد مناسبة ليك يا بطل
+    </p>
+
 </div>
 
 <div class="form-container">
@@ -141,7 +263,7 @@ footer { padding:35px 20px; text-align:center; margin-top:40px; }
         <div class="form-group">
             <label>السنتر</label>
             <select name="center" required>
-                <option value="" disabled selected style="font-size:0.85rem;">اختار السنتر</option>
+                <option value="" disabled selected>اختار السنتر</option>
                 <option value="manshya">المنشية</option>
                 <option value="gomhor">الجمهورية</option>
                 <option value="shaabeya">الشعبية</option>
@@ -150,47 +272,63 @@ footer { padding:35px 20px; text-align:center; margin-top:40px; }
         <div class="form-group">
             <label>الصف الدراسي</label>
             <select name="grade" required>
-                <option value="" disabled selected style="font-size:0.85rem;">اختار السنة الدراسية</option>
+                <option value="" disabled selected>اختار السنة الدراسية</option>
                 <option value="first-prep">الصف الاول الإعدادي</option>
                 <option value="second-prep">الصف الثاني الإعدادي</option>
                 <option value="third-prep">الصف الثالث الإعدادي</option>
-                <option value="first-sec">الصف الاول الثانوي [ بكالوريا ]</option>
-                <option value="second-sec">الصف الثاني الثانوي [ بكالوريا ]</option>
+                <option value="first-sec">الصف الاول الثانوي</option>
+                <option value="second-sec">الصف الثاني الثانوي</option>
             </select>
         </div>
         <div class="form-group">
             <label>الموعد المتاح</label>
             <select name="time" required>
-                <option value="" disabled selected style="font-size:0.85rem;">اختار السنتر والسنة أولاً</option>
+                <option value="" disabled selected>اختار الموعد</option>
                 <option value="morning">صباحي</option>
                 <option value="evening">مسائي</option>
             </select>
         </div>
-        <button type="submit" class="btn-submit"><i class="fas fa-check-circle"></i> تأكيد الحجز</button>
+
+        <button type="submit" class="btn-submit">
+            <i class="fas fa-check-circle"></i> تأكيد الحجز
+        </button>
     </form>
 </div>
 
 <div class="locations-section">
     <h2 class="section-title">أماكن تواجدنا</h2>
     <div class="locations-grid">
-        <div class="location-card"><div class="location-icon"><i class="fas fa-map-marker-alt"></i></div><div class="location-name">المنشية</div><div class="location-address">شارع ١٠ _ ش معمل الجبنة _ امام سوبر ماركت البركة</div></div>
-        <div class="location-card"><div class="location-icon"><i class="fas fa-map-marker-alt"></i></div><div class="location-name">الجمهورية</div><div class="location-address">خلف كافية كركر لاند</div></div>
-        <div class="location-card"><div class="location-icon"><i class="fas fa-map-marker-alt"></i></div><div class="location-name">الشعبية</div><div class="location-address">خلف كافية كركر لاند</div></div>
+        <div class="location-card">
+            <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="location-name">المنشية</div>
+            <div class="location-address">شارع ١٠ _ ش معمل الجبنة _ امام سوبر ماركت البركة</div>
+        </div>
+
+        <div class="location-card">
+            <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="location-name">الجمهورية</div>
+            <div class="location-address">خلف كافية كركر لاند</div>
+        </div>
+
+        <div class="location-card">
+            <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="location-name">الشعبية</div>
+            <div class="location-address">خلف كافية كركر لاند</div>
+        </div>
     </div>
 </div>
 
 <footer>
     <h3>خد جولة في منصات التواصل</h3>
     <div class="social-icons">
-        <a href="https://www.tiktok.com/@mr.ibrahim.emam?_r=1&_t=ZS-95F0IpFcpM8" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://youtube.com/@mribrahimemam_22?si=NRaUN6wPstOV4DHP" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.facebook.com/share/1Gn6fgDh7z/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
         <a href="https://wa.me/201117694179" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
 </footer>
 
 <script>
-// ضع هنا رابط Web App من Google Apps Script بعد نشر السكربت
 const scriptURL = 'PASTE_YOUR_WEB_APP_URL_HERE';
 
 const form = document.forms['bookingForm'];
