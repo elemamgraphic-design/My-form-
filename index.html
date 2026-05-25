@@ -17,29 +17,115 @@
     --bg-main: #2B0A0A;
     --text-main: #FDF6E3;
     --accent-color: #D4AF37;
-    --card-bg: rgba(255,255,255,0.05);
-    --input-bg: #3B1B1B;
+    --card-bg: #3a1212;
+    --input-bg: #2e0e0e;
     --btn-hover: #FFD700;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
-
     background-image:
     linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
     background-size: 40px 40px;
-
     overflow-x: hidden;
 }
 
+/* ===== LOADER ===== */
+#page-loader {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-main);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#page-loader.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-ring {
+    width: 70px;
+    height: 70px;
+    border: 4px solid rgba(212,175,55,0.2);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+.loader-text {
+    color: var(--accent-color);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+
+/* ===== REVEAL ANIMATIONS ===== */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== QUICK NAV ===== */
+.quick-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(43,10,10,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.quick-nav a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border: 1px solid var(--accent-color);
+    border-radius: 50px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.quick-nav a:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-main);
+}
+
+/* ===== HERO ===== */
 .hero-section { text-align:center; padding:20px; }
 .hero-image-container { width:100%; max-width:400px; margin:20px auto; }
 .hero-image { 
     width:100%; 
     border-radius:20px; 
     box-shadow:0 10px 30px rgba(0,0,0,0.7); 
+    animation: heroFloat 4s ease-in-out infinite;
+}
+@keyframes heroFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .badge {
@@ -50,6 +136,11 @@ body {
     font-weight:bold;
     display:inline-block;
     margin-top:20px;
+    animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(212,175,55,0); }
 }
 
 h1 { font-size:2rem; font-weight:900; margin:15px 0; }
@@ -67,13 +158,142 @@ h1 { font-size:2rem; font-weight:900; margin:15px 0; }
     margin-bottom:30px; 
 }
 
+/* ===== STATS ===== */
+.stats-section {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 16px;
+    padding: 22px 30px;
+    text-align: center;
+    min-width: 140px;
+    flex: 1;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.stat-number {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--accent-color);
+    display: block;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 6px;
+    display: block;
+}
+
+/* ===== WHY SECTION ===== */
+.why-section {
+    padding: 40px 20px;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.why-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--accent-color);
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+}
+
+.why-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.feature-card {
+    background-color: var(--card-bg);
+    border-radius: 14px;
+    padding: 20px 18px;
+    text-align: right;
+    border: 1px solid rgba(212,175,55,0.15);
+    transition: transform 0.3s, border-color 0.3s;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-color);
+}
+
+.feature-bullet {
+    color: var(--accent-color);
+    font-size: 1.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.feature-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+
+/* ===== WAVE DIVIDER ===== */
+.wave-divider {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    margin: 0;
+}
+.wave-divider svg {
+    display: block;
+    width: 100%;
+    height: 60px;
+}
+.wave-divider.flip { transform: scaleY(-1); }
+
+/* ===== FORM ===== */
 .form-container {
     background-color: var(--card-bg);
-    backdrop-filter: blur(10px);
     margin:20px auto;
     padding:25px;
     border-radius:20px;
     max-width:500px;
+}
+
+.form-title {
+    text-align: center;
+    color: var(--accent-color);
+    font-size: 1.3rem;
+    margin-bottom: 20px;
 }
 
 .form-group { margin-bottom:15px; text-align:right; }
@@ -86,22 +306,65 @@ label {
     font-size:0.95rem; 
 }
 
-input, select {
+.input-hint {
+    font-size: 0.75rem;
+    color: #aaa;
+    margin-top: 4px;
+    display: none;
+}
+
+.input-hint.show { display: block; }
+.input-hint.valid { color: #68d391; }
+.input-hint.invalid { color: #fc8181; }
+
+input, select, textarea {
     width:100%; 
     padding:12px; 
-    border:none; 
+    border: 2px solid transparent;
     border-radius:10px;
     background-color: var(--input-bg); 
     color:#FFF; 
     font-size:0.95rem; 
     text-align:right;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: 'ExpoArabicBold', sans-serif;
 }
 
-input::placeholder { color:#aaa; }
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+input::placeholder, textarea::placeholder { color:#aaa; }
+
+input:focus, select:focus, textarea:focus {
+    border-color: rgba(212,175,55,0.5);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+}
+
+input.input-error, select.input-error, textarea.input-error {
+    border-color: #e53e3e !important;
+    box-shadow: 0 0 0 3px rgba(229,62,62,0.25);
+    animation: shake 0.35s ease;
+}
+
+input.input-valid, select.input-valid {
+    border-color: #48bb78 !important;
+}
+
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-6px); }
+    40%  { transform: translateX(6px); }
+    60%  { transform: translateX(-4px); }
+    80%  { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+}
 
 .btn-submit {
     width:100%; 
-    padding:12px; 
+    padding:14px; 
     background-color: var(--accent-color);
     color: var(--bg-main); 
     border:none; 
@@ -110,18 +373,123 @@ input::placeholder { color:#aaa; }
     font-weight:900; 
     cursor:pointer; 
     margin-top:10px;
+    font-family: 'ExpoArabicBold', sans-serif;
+    transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .btn-submit:hover { 
-    background-color: var(--btn-hover); 
+    background-color: var(--btn-hover);
+    transform: translateY(-2px);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.btn-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
 }
 
 #errorMsg {
-    color:red;
+    color: #fc8181;
     margin-top:10px;
     font-weight:bold;
+    font-size: 0.9rem;
+    min-height: 20px;
 }
 
+/* ===== THANK YOU PAGE ===== */
+#thank-you-page {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg-main);
+    z-index: 500;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+#thank-you-page.show {
+    display: flex;
+}
+
+.ty-icon {
+    font-size: 5rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.ty-title {
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.ty-subtitle {
+    font-size: 1rem;
+    opacity: 0.85;
+    line-height: 1.7;
+    max-width: 400px;
+    animation: fadeUp 0.6s 0.5s ease both;
+    margin-bottom: 30px;
+}
+
+.ty-student-name {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+.ty-back-btn {
+    padding: 12px 30px;
+    background: var(--accent-color);
+    color: var(--bg-main);
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 900;
+    cursor: pointer;
+    font-family: 'ExpoArabicBold', sans-serif;
+    transition: background 0.3s;
+    animation: fadeUp 0.6s 0.7s ease both;
+}
+
+.ty-back-btn:hover { background: var(--btn-hover); }
+
+.ty-confetti {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/* ===== LOCATIONS ===== */
 .locations-section { padding:35px 20px; text-align:center; }
 
 .section-title { 
@@ -157,11 +525,12 @@ input::placeholder { color:#aaa; }
     padding:20px; 
     text-align:center;
     transition: transform 0.3s;
+    border: 1px solid transparent;
 }
 
 .location-card:hover { 
     transform:translateY(-5px); 
-    border:1px solid var(--accent-color); 
+    border-color: var(--accent-color); 
 }
 
 .location-icon { 
@@ -181,10 +550,69 @@ input::placeholder { color:#aaa; }
     font-size:0.85rem; 
     opacity:0.9; 
     line-height:1.4; 
+    margin-bottom: 12px;
 }
 
+.location-schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.schedule-badge {
+    background: rgba(212,175,55,0.1);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+}
+
+.schedule-badge i {
+    color: var(--accent-color);
+    font-size: 0.75rem;
+}
+
+/* ===== NOTE BOX ===== */
+.note-box {
+    max-width: 700px;
+    margin: 25px auto 10px;
+    background: rgba(212,175,55,0.08);
+    border: 1px dashed var(--accent-color);
+    border-radius: 12px;
+    padding: 16px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: right;
+}
+
+.note-icon {
+    color: var(--accent-color);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.note-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--text-main);
+    opacity: 0.95;
+}
+
+.note-text strong {
+    color: var(--accent-color);
+}
+
+/* ===== FOOTER ===== */
 footer { 
-    padding:35px 20px; 
+    padding:35px 20px 80px; 
     text-align:center; 
     margin-top:40px; 
 }
@@ -209,12 +637,76 @@ footer {
 .social-icons a:hover { 
     background-color: var(--accent-color); 
     color: var(--bg-main); 
+    transform: translateY(-3px);
+}
+
+.powered-by {
+    margin-top: 20px;
+    font-size: 0.78rem;
+    opacity: 0.5;
+    letter-spacing: 1px;
+    color: var(--accent-color);
+}
+
+/* ===== WHATSAPP FLOAT ===== */
+.whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    width: 58px;
+    height: 58px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+    z-index: 200;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: waPulse 2.5s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 28px rgba(37,211,102,0.7);
+    animation: none;
+}
+
+@keyframes waPulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); }
+    50% { box-shadow: 0 4px 30px rgba(37,211,102,0.9); }
+}
+
+.whatsapp-tooltip {
+    position: absolute;
+    left: 70px;
+    background: #fff;
+    color: #333;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    font-family: 'ExpoArabicBold', sans-serif;
+}
+
+.whatsapp-float:hover .whatsapp-tooltip {
+    opacity: 1;
 }
 
 @media (max-width:600px){
     h1 { font-size:1.7rem; }
     .highlight-gold { font-size:3rem; }
     .form-container { padding:15px; }
+    .why-title { font-size: 1.3rem; }
+    .stat-number { font-size: 2rem; }
+    .whatsapp-float { bottom: 20px; left: 15px; }
 }
 </style>
 
@@ -223,14 +715,46 @@ footer {
 
 <body>
 
-<div class="hero-section">
+<!-- ===== LOADER ===== -->
+<div id="page-loader">
+    <div class="loader-ring"></div>
+    <div class="loader-text">جاري التحميل...</div>
+</div>
 
+<!-- ===== THANK YOU PAGE ===== -->
+<div id="thank-you-page">
+    <canvas class="ty-confetti" id="confettiCanvas"></canvas>
+    <div class="ty-icon"><i class="fas fa-check-circle"></i></div>
+    <h2 class="ty-title">تم الحجز بنجاح! 🎉</h2>
+    <p class="ty-subtitle">
+        أهلاً وسهلاً يا <span class="ty-student-name" id="ty-name"></span>!<br>
+        تم إرسال طلب حجزك بنجاح.<br>
+        سيتم التواصل معك قريباً على رقمك. 💪
+    </p>
+    <button class="ty-back-btn" onclick="closeThankyou()">
+        <i class="fas fa-home"></i> العودة للصفحة
+    </button>
+</div>
+
+<!-- ===== WHATSAPP FLOAT ===== -->
+<a href="https://wa.me/201117694179?text=السلام عليكم" target="_blank" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+    <span class="whatsapp-tooltip">تواصل معنا</span>
+</a>
+
+<!-- ===== QUICK NAV ===== -->
+<nav class="quick-nav">
+    <a href="#why-section"><i class="fas fa-star"></i> ليه الكينج؟</a>
+    <a href="#booking-form"><i class="fas fa-pen"></i> احجز دلوقتي</a>
+    <a href="#locations"><i class="fas fa-map-marker-alt"></i> الفروع</a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero-section reveal">
     <div class="badge">الحجز للعام الدراسي الجديد 2027 - 2026</div>
 
     <div class="hero-image-container">
-        <a href="https://ibb.co/Pvbf6VhS">
         <img src="https://i.ibb.co/pBs9Lkzm/Generated-Image-September-19-2025-7-23-PM-1-1.png" alt="ابراهيـــــم امـــــــــــام" class="hero-image">
-        </a>
     </div>
 
     <h1>
@@ -241,27 +765,96 @@ footer {
     <p class="subtitle">
         احجز الآن مع كينج اللغة الانجليزية<br>بسهولة و بمواعيد مناسبة ليك يا بطل
     </p>
-
 </div>
 
-<div class="form-container">
-    <form id="bookingForm">
+<!-- ===== WAVE ===== -->
+<div class="wave-divider">
+    <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#3a1212"/>
+    </svg>
+</div>
+
+<!-- ===== STATS ===== -->
+<section class="stats-section reveal">
+    <div class="stat-card">
+        <span class="stat-number" data-target="500">0</span>
+        <span class="stat-label">طالب محجوز+</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number" data-target="7">0</span>
+        <span class="stat-label">سنوات خبرة</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number" data-target="3">0</span>
+        <span class="stat-label">فروع</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number" data-target="98">0</span>
+        <span class="stat-label">% نسبة رضا الطلاب</span>
+    </div>
+</section>
+
+<!-- ===== WAVE ===== -->
+<div class="wave-divider flip">
+    <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#3a1212"/>
+    </svg>
+</div>
+
+<!-- ===== WHY SECTION ===== -->
+<section id="why-section" class="why-section reveal">
+    <h2 class="why-title">ليه تحتار تبقي من أبطال الكينج؟</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-bullet">●</span>
+            <span class="feature-text">شرح مبسط بأسلوب عصري</span>
+        </div>
+        <div class="feature-card">
+            <span class="feature-bullet">●</span>
+            <span class="feature-text">تأسيس قوي من البداية</span>
+        </div>
+        <div class="feature-card">
+            <span class="feature-bullet">●</span>
+            <span class="feature-text">متابعة مستمرة مع الطلاب</span>
+        </div>
+        <div class="feature-card">
+            <span class="feature-bullet">●</span>
+            <span class="feature-text">نظام يساعد الطالب على الفهم والتطبيق بثقة</span>
+        </div>
+    </div>
+</section>
+
+<!-- ===== WAVE ===== -->
+<div class="wave-divider">
+    <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,20 C400,55 800,0 1200,35 L1200,60 L0,60 Z" fill="#3a1212"/>
+    </svg>
+</div>
+
+<!-- ===== BOOKING FORM ===== -->
+<div id="booking-form" class="form-container reveal">
+    <h3 class="form-title"><i class="fas fa-pen-to-square"></i> سجل بياناتك الآن</h3>
+    <form id="bookingForm" novalidate>
         <div id="errorMsg"></div>
         <div class="form-group">
             <label>اسم الطالب رباعي</label>
-            <input type="text" name="student_name" placeholder="الاسم رباعي بالكامل" required>
+            <input type="text" name="student_name" placeholder="الاسم رباعي بالكامل" required autocomplete="off">
+            <div class="input-hint" id="hint-student_name"></div>
         </div>
         <div class="form-group">
             <label>رقم التواصل (طالب)</label>
             <input type="tel" name="student_phone" placeholder="01xxxxxxxxx" required>
+            <div class="input-hint" id="hint-student_phone"></div>
         </div>
         <div class="form-group">
             <label>رقم الواتس آب</label>
             <input type="tel" name="whatsapp" placeholder="01xxxxxxxxx" required>
+            <div class="input-hint" id="hint-whatsapp"></div>
         </div>
         <div class="form-group">
             <label>رقم ولي الأمر</label>
             <input type="tel" name="parent_phone" placeholder="01xxxxxxxxx" required>
+            <div class="input-hint" id="hint-parent_phone"></div>
         </div>
         <div class="form-group">
             <label>السنتر</label>
@@ -291,87 +884,291 @@ footer {
                 <option value="evening">مسائي</option>
             </select>
         </div>
+        <div class="form-group">
+            <label>ملاحظات إضافية (اختياري)</label>
+            <textarea name="notes" placeholder="أي ملاحظة أو طلب خاص..."></textarea>
+        </div>
 
-        <button type="submit" class="btn-submit">
+        <button type="submit" class="btn-submit" id="submitBtn">
             <i class="fas fa-check-circle"></i> تأكيد الحجز
         </button>
+        <div id="errorMsg2"></div>
     </form>
 </div>
 
-<div class="locations-section">
+<!-- ===== WAVE ===== -->
+<div class="wave-divider flip">
+    <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,20 C400,55 800,0 1200,35 L1200,60 L0,60 Z" fill="#3a1212"/>
+    </svg>
+</div>
+
+<!-- ===== LOCATIONS ===== -->
+<div id="locations" class="locations-section reveal">
     <h2 class="section-title">أماكن تواجدنا</h2>
     <div class="locations-grid">
         <div class="location-card">
             <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div class="location-name">المنشية</div>
             <div class="location-address">شارع ١٠ _ ش معمل الجبنة _ امام سوبر ماركت البركة</div>
+            <div class="location-schedule">
+                <div class="schedule-badge"><i class="fas fa-sun"></i> صباحي متاح</div>
+                <div class="schedule-badge"><i class="fas fa-moon"></i> مسائي متاح</div>
+            </div>
         </div>
-
         <div class="location-card">
             <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div class="location-name">الجمهورية</div>
             <div class="location-address">خلف كافية كركر لاند</div>
+            <div class="location-schedule">
+                <div class="schedule-badge"><i class="fas fa-sun"></i> صباحي متاح</div>
+                <div class="schedule-badge"><i class="fas fa-moon"></i> مسائي متاح</div>
+            </div>
         </div>
-
         <div class="location-card">
             <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div class="location-name">الشعبية</div>
             <div class="location-address">خلف كافية كركر لاند</div>
+            <div class="location-schedule">
+                <div class="schedule-badge"><i class="fas fa-sun"></i> صباحي متاح</div>
+                <div class="schedule-badge"><i class="fas fa-moon"></i> مسائي متاح</div>
+            </div>
         </div>
+    </div>
+
+    <div class="note-box">
+        <span class="note-icon"><i class="fas fa-info-circle"></i></span>
+        <p class="note-text">
+            <strong>ملحوظة ●</strong> يوجد عناوين أخري لسناتر سيتم الإعلان عنها قريباً
+        </p>
     </div>
 </div>
 
+<!-- ===== FOOTER ===== -->
 <footer>
     <h3>خد جولة في منصات التواصل</h3>
     <div class="social-icons">
         <a href="https://www.tiktok.com/@mr.ibrahim.emam?_r=1&_t=ZS-95KK65BEgwq" target="_blank"><i class="fab fa-tiktok"></i></a>
         <a href="https://youtube.com/@mribrahimemam_22?si=-PRPa5jitaNwUlAx" target="_blank"><i class="fab fa-youtube"></i></a>
         <a href="https://www.facebook.com/share/14XbdZmGbaR/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://wa.me/201117694179?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://wa.me/201117694179?text=السلام عليكم" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
+    <p class="powered-by">Powered by El.Emam</p>
 </footer>
 
 <script>
+// ===== LOADER =====
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('page-loader').classList.add('hide');
+    }, 1000);
+});
+
+// ===== SCROLL REVEAL =====
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Trigger counter if stat section
+            if (entry.target.classList.contains('stats-section')) {
+                animateCounters();
+            }
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ===== COUNTER ANIMATION =====
+let countersStarted = false;
+function animateCounters() {
+    if (countersStarted) return;
+    countersStarted = true;
+    document.querySelectorAll('.stat-number[data-target]').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const duration = 1500;
+        const step = target / (duration / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = Math.floor(current);
+        }, 16);
+    });
+}
+
+// ===== LIVE VALIDATION =====
+const phonePattern = /^01[0-9]{9}$/;
+
+function validatePhone(input, hintId) {
+    const hint = document.getElementById(hintId);
+    const val = input.value.trim();
+    if (!val) { hint.className = 'input-hint'; hint.textContent = ''; return; }
+    if (phonePattern.test(val)) {
+        input.classList.remove('input-error'); input.classList.add('input-valid');
+        hint.className = 'input-hint show valid'; hint.textContent = '✔ رقم صحيح';
+    } else {
+        input.classList.remove('input-valid'); input.classList.add('input-error');
+        hint.className = 'input-hint show invalid'; hint.textContent = '✘ يبدأ بـ 01 ويكون 11 رقم';
+    }
+}
+
+function validateName(input, hintId) {
+    const hint = document.getElementById(hintId);
+    const words = input.value.trim().split(' ').filter(w => w);
+    if (!input.value.trim()) { hint.className = 'input-hint'; hint.textContent = ''; return; }
+    if (words.length >= 4) {
+        input.classList.remove('input-error'); input.classList.add('input-valid');
+        hint.className = 'input-hint show valid'; hint.textContent = '✔ الاسم رباعي';
+    } else {
+        input.classList.remove('input-valid');
+        hint.className = 'input-hint show invalid';
+        hint.textContent = `✘ أدخل ${4 - words.length} كلمة أكثر`;
+    }
+}
+
+const form = document.getElementById('bookingForm');
+form.querySelector('[name="student_name"]').addEventListener('input', e => validateName(e.target, 'hint-student_name'));
+form.querySelector('[name="student_phone"]').addEventListener('input', e => validatePhone(e.target, 'hint-student_phone'));
+form.querySelector('[name="whatsapp"]').addEventListener('input', e => validatePhone(e.target, 'hint-whatsapp'));
+form.querySelector('[name="parent_phone"]').addEventListener('input', e => validatePhone(e.target, 'hint-parent_phone'));
+
+// ===== SAVE FORM TO LOCALSTORAGE =====
+const SAVE_FIELDS = ['student_name','student_phone','whatsapp','parent_phone','center','grade','time','notes'];
+SAVE_FIELDS.forEach(name => {
+    const el = form.querySelector(`[name="${name}"]`);
+    if (!el) return;
+    const saved = localStorage.getItem('booking_' + name);
+    if (saved) el.value = saved;
+    el.addEventListener('change', () => localStorage.setItem('booking_' + name, el.value));
+    el.addEventListener('input',  () => localStorage.setItem('booking_' + name, el.value));
+});
+
+// ===== CONFETTI =====
+function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
+    const pieces = Array.from({length: 120}, () => ({
+        x: Math.random() * canvas.width,
+        y: -20,
+        w: Math.random() * 10 + 5,
+        h: Math.random() * 6 + 3,
+        color: ['#D4AF37','#FFD700','#FFF','#FF6B6B','#4ECDC4'][Math.floor(Math.random()*5)],
+        speed: Math.random() * 3 + 2,
+        angle: Math.random() * 360,
+        spin: Math.random() * 6 - 3
+    }));
+    let frame;
+    function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        pieces.forEach(p => {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.angle * Math.PI / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+            ctx.restore();
+            p.y += p.speed;
+            p.angle += p.spin;
+            p.x += Math.sin(p.angle * 0.05) * 1.5;
+        });
+        if (pieces.some(p => p.y < canvas.height)) {
+            frame = requestAnimationFrame(draw);
+        } else {
+            cancelAnimationFrame(frame);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+        }
+    }
+    draw();
+}
+
+function closeThankyou() {
+    document.getElementById('thank-you-page').classList.remove('show');
+    document.getElementById('thank-you-page').style.display = 'none';
+}
+
+// ===== SUBMIT =====
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxW4mF9u8O5aLZTU8knkO0UV3_EzWCwBdmgpO7GqZbJmztnfY9jWMjDJFLKWES_l5A/exec';
-const form = document.forms['bookingForm'];
 const errorMsg = document.getElementById('errorMsg');
+const submitBtn = document.getElementById('submitBtn');
+
+function clearErrors() {
+    form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    errorMsg.innerText = '';
+}
+
+function markError(fieldName, message) {
+    const field = form.querySelector(`[name="${fieldName}"]`);
+    if (field) {
+        field.classList.add('input-error');
+        field.addEventListener('input', () => field.classList.remove('input-error'), { once: true });
+        field.addEventListener('change', () => field.classList.remove('input-error'), { once: true });
+        field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => field.focus(), 400);
+    }
+    errorMsg.innerText = message;
+}
 
 form.addEventListener('submit', e => {
     e.preventDefault();
+    clearErrors();
 
-    // ✅ Validation
-    const student_name = form['student_name'].value.trim();
+    const student_name  = form['student_name'].value.trim();
     const student_phone = form['student_phone'].value.trim();
-    const whatsapp = form['whatsapp'].value.trim();
-    const parent_phone = form['parent_phone'].value.trim();
+    const whatsapp      = form['whatsapp'].value.trim();
+    const parent_phone  = form['parent_phone'].value.trim();
+    const center        = form['center'].value;
+    const grade         = form['grade'].value;
+    const time          = form['time'].value;
 
-    const phonePattern = /^01[0-9]{9}$/;
-
-    if(student_name.split(' ').length < 4){
-        errorMsg.innerText = "اكتب الاسم رباعي كامل!";
+    if (student_name.split(' ').filter(w => w).length < 4) {
+        markError('student_name', '❌ اكتب الاسم رباعي كامل!');
         return;
     }
-
-    if(!phonePattern.test(student_phone)){
-        errorMsg.innerText = "رقم الطالب غير صحيح!";
+    if (!phonePattern.test(student_phone)) {
+        markError('student_phone', '❌ رقم الطالب غير صحيح!');
         return;
     }
-
-    if(!phonePattern.test(whatsapp)){
-        errorMsg.innerText = "رقم الواتس غير صحيح!";
+    if (!phonePattern.test(whatsapp)) {
+        markError('whatsapp', '❌ رقم الواتس غير صحيح!');
         return;
     }
-
-    if(!phonePattern.test(parent_phone)){
-        errorMsg.innerText = "رقم ولي الأمر غير صحيح!";
+    if (!phonePattern.test(parent_phone)) {
+        markError('parent_phone', '❌ رقم ولي الأمر غير صحيح!');
         return;
     }
+    if (!center) { markError('center', '❌ اختار السنتر!'); return; }
+    if (!grade)  { markError('grade',  '❌ اختار الصف الدراسي!'); return; }
+    if (!time)   { markError('time',   '❌ اختار الموعد!'); return; }
 
-    // إرسال الفورم بعد الفاليديشن
-    errorMsg.innerText = "";
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-    .then(response => alert('تم إرسال طلب الحجز بنجاح! سيتم التواصل معك قريباً.'))
-    .catch(error => alert('حدث خطأ، حاول مرة أخرى.'));
+    // Show loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(() => {
+            // Clear saved data
+            SAVE_FIELDS.forEach(name => localStorage.removeItem('booking_' + name));
+            form.reset();
+            // Show thank you
+            document.getElementById('ty-name').textContent = student_name.split(' ').slice(0,2).join(' ');
+            const ty = document.getElementById('thank-you-page');
+            ty.style.display = 'flex';
+            ty.classList.add('show');
+            launchConfetti();
+        })
+        .catch(() => {
+            errorMsg.innerText = '⚠️ حدث خطأ، حاول مرة أخرى.';
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> تأكيد الحجز';
+        });
 });
 </script>
 
