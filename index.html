@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حجز السنتر - مستر ابراهيـــــم امـــــــــــام</title>
+<title>حجز المقر - مستر ابراهيـــــم امـــــــــــام</title>
 
 <style>
 @font-face {
@@ -803,7 +803,7 @@ footer {
 
 <!-- ===== WHY SECTION ===== -->
 <section id="why-section" class="why-section reveal">
-    <h2 class="why-title">ليه تحتار تبقي من أبطال الكينج؟</h2>
+    <h2 class="why-title">ليه تختار تبقي من أبطال الكينج؟</h2>
     <div class="features-grid">
         <div class="feature-card">
             <span class="feature-bullet">●</span>
@@ -815,12 +815,15 @@ footer {
         </div>
         <div class="feature-card">
             <span class="feature-bullet">●</span>
-            <span class="feature-text">متابعة مستمرة مع الطلاب</span>
+            <span class="feature-text">متابعة مستمرة مع الطلاب و ولي الأمر</span>
         </div>
         <div class="feature-card">
             <span class="feature-bullet">●</span>
             <span class="feature-text">نظام يساعد الطالب على الفهم والتطبيق بثقة</span>
         </div>
+        <div class="feature-card">
+            <span class="feature-bullet">●</span>
+            <span class="feature-text">اللغة الإنجليزية كما لم تسمعها من قبل</span>
     </div>
 </section>
 
@@ -857,9 +860,9 @@ footer {
             <div class="input-hint" id="hint-parent_phone"></div>
         </div>
         <div class="form-group">
-            <label>السنتر</label>
+            <label>المقر</label>
             <select name="center" required>
-                <option value="" disabled selected>اختار السنتر</option>
+                <option value="" disabled selected>اختار المقر</option>
                 <option value="manshya">المنشية</option>
                 <option value="gomhor">الجمهورية</option>
                 <option value="shaabeya">الشعبية</option>
@@ -874,6 +877,7 @@ footer {
                 <option value="third-prep">الصف الثالث الإعدادي</option>
                 <option value="first-sec">الصف الاول الثانوي</option>
                 <option value="second-sec">الصف الثاني الثانوي</option>
+                <option value="second-sec">الصف الثالث الثانوي</option>
             </select>
         </div>
         <div class="form-group">
@@ -910,10 +914,8 @@ footer {
         <div class="location-card">
             <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div class="location-name">المنشية</div>
-            <div class="location-address">شارع ١٠ _ ش معمل الجبنة _ امام سوبر ماركت البركة</div>
+            <div class="location-address">شارع  مخزن الأنابيب ناصية عطارة الشيخ صابرامام مسجد الرسالة</div>
             <div class="location-schedule">
-                <div class="schedule-badge"><i class="fas fa-sun"></i> صباحي متاح</div>
-                <div class="schedule-badge"><i class="fas fa-moon"></i> مسائي متاح</div>
             </div>
         </div>
         <div class="location-card">
@@ -921,8 +923,6 @@ footer {
             <div class="location-name">الجمهورية</div>
             <div class="location-address">خلف كافية كركر لاند</div>
             <div class="location-schedule">
-                <div class="schedule-badge"><i class="fas fa-sun"></i> صباحي متاح</div>
-                <div class="schedule-badge"><i class="fas fa-moon"></i> مسائي متاح</div>
             </div>
         </div>
         <div class="location-card">
@@ -930,8 +930,6 @@ footer {
             <div class="location-name">الشعبية</div>
             <div class="location-address">خلف كافية كركر لاند</div>
             <div class="location-schedule">
-                <div class="schedule-badge"><i class="fas fa-sun"></i> صباحي متاح</div>
-                <div class="schedule-badge"><i class="fas fa-moon"></i> مسائي متاح</div>
             </div>
         </div>
     </div>
@@ -939,7 +937,7 @@ footer {
     <div class="note-box">
         <span class="note-icon"><i class="fas fa-info-circle"></i></span>
         <p class="note-text">
-            <strong>ملحوظة ●</strong> يوجد عناوين أخري لسناتر سيتم الإعلان عنها قريباً
+            <strong>ملحوظة ●</strong> يوجد عناوين أخري لمقرات سيتم الإعلان عنها قريباً
         </p>
     </div>
 </div>
@@ -950,7 +948,7 @@ footer {
     <div class="social-icons">
         <a href="https://www.tiktok.com/@mr.ibrahim.emam?_r=1&_t=ZS-95KK65BEgwq" target="_blank"><i class="fab fa-tiktok"></i></a>
         <a href="https://youtube.com/@mribrahimemam_22?si=-PRPa5jitaNwUlAx" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.facebook.com/share/14XbdZmGbaR/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.facebook.com/mribrahimmemam/" target="_blank"><i class="fab fa-facebook-f"></i></a>
         <a href="https://wa.me/201117694179?text=السلام عليكم" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
     <p class="powered-by">Powered by El.Emam</p>
@@ -1142,7 +1140,7 @@ form.addEventListener('submit', e => {
         markError('parent_phone', '❌ رقم ولي الأمر غير صحيح!');
         return;
     }
-    if (!center) { markError('center', '❌ اختار السنتر!'); return; }
+    if (!center) { markError('center', '❌ اختار المقرر!'); return; }
     if (!grade)  { markError('grade',  '❌ اختار الصف الدراسي!'); return; }
     if (!time)   { markError('time',   '❌ اختار الموعد!'); return; }
 
